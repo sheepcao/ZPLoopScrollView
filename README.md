@@ -43,4 +43,4 @@ ZPLoopScrollView 需要ARC.
 	}
 	
 #效果展示
-![图片循环,可点击](http://7xoj45.com1.z0.glb.clouddn.com/2016-05-31%2016_54_22.gif)
+![图片循环,可点击](2016-05-31 16_54_22.gif)

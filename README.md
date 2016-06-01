@@ -2,10 +2,7 @@
 使用三个UIImageView实现图片的无限循环,可手动拖拽以及点击交互
 
 #添加到你的项目
-#####CocoaPods添加:
-	
-pod ‘ZPLoopScrollView’ ~ '1.0.0'
-	
+
 ####手动添加:
 
 1. 添加**ZPLoopScrollView.h** 和 **ZPLoopScrollView.m**到你的项目.
@@ -47,4 +44,4 @@ ZPLoopScrollView 需要ARC.
 	}
 	
 #效果展示
-![图片循环,可点击](http://7xoj45.com1.z0.glb.clouddn.com/2016-05-31%2016_54_22.gif)
+![图片循环,可点击](https://github.com/twenty-zp/Nothing/blob/master/2016-05-31%2016_54_22.gif)

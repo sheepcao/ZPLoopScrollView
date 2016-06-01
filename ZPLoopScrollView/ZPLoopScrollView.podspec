@@ -9,11 +9,11 @@ Pod::Spec.new do |s|
                    DESC
   s.homepage     = "https://github.com/twenty-zp/ZPLoopScrollView"
   s.author       =  {'twenty-zp' => 'twenty-zp'}
-  s.license      = { :type => 'MIT', :file => 'LICENSE.txt' }
+  s.license      =  { :type => 'MIT', :file => 'LICENSE'}
   s.platform     =  :ios
   s.source       = { :git => "https://github.com/twenty-zp/ZPLoopScrollView.git", :tag => "1.0.0"}
 
-  s.source_files  = "ZPLoopScrollView/*.{h,m}"
+  s.source_files  = "ZPLoopScrollView/ZPLoopScrollView/*.{h,m}"
   s.framework     = 'UIKit'
   s.requires_arc = true
 

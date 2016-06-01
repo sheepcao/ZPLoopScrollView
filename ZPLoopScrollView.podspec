@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
                    DESC
   s.homepage     = "https://github.com/twenty-zp/ZPLoopScrollView"
   s.author       =  {'twenty-zp' => 'twenty-zp'}
-  s.license      =  { :type => 'MIT', :file => 'LICENSE.txt'}
+  s.license      =  { :type => 'MIT', :file => 'ZPLoopScrollView/LICENSE.txt'}
   s.platform     =  :ios
   s.source       = { :git => "https://github.com/twenty-zp/ZPLoopScrollView.git", :tag => s.version}
 

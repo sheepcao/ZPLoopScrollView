@@ -2,7 +2,10 @@
 使用三个UIImageView实现图片的无限循环,可手动拖拽以及点击交互
 
 #添加到你的项目
+####Cocoapods添加:
+直接在Podfile中使用即可
 
+	pod 'ZPLoopScrollView', '~> 1.0.0'
 ####手动添加:
 
 1. 添加**ZPLoopScrollView.h** 和 **ZPLoopScrollView.m**到你的项目.

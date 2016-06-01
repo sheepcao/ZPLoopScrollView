@@ -11,9 +11,9 @@ Pod::Spec.new do |s|
   s.author       =  {'twenty-zp' => 'twenty-zp'}
   s.license      =  { :type => 'MIT', :file => 'LICENSE.txt'}
   s.platform     =  :ios
-  s.source       = { :git => "https://github.com/twenty-zp/ZPLoopScrollView.git", :tag => "1.0.0"}
+  s.source       = { :git => "https://github.com/twenty-zp/ZPLoopScrollView.git", :tag => s.version}
 
-  s.source_files  = '*.{h,m}'
+  s.source_files  = 'ZPLoopScrollView/*.{h,m}'
   s.framework     = 'UIKit'
   s.requires_arc = true
 

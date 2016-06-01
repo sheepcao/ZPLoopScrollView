@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.platform     =  :ios
   s.source       = { :git => "https://github.com/twenty-zp/ZPLoopScrollView.git", :tag => "1.0.0"}
 
-  s.source_files  = "ZPLoopScrollView/ZPLoopScrollView/*.{h,m}"
+  s.source_files  = '*.{h,m}'
   s.framework     = 'UIKit'
   s.requires_arc = true
 

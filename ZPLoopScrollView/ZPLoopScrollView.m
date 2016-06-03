@@ -42,8 +42,6 @@
 {
     if (self == [super initWithFrame:frame]) {
         
-        NSCache * cache = [[NSCache alloc]init];
-        cache.name = @"com.zp.download.image";
         [self setup];
     }
     return self;
@@ -78,7 +76,7 @@
     _rightImageView.frame = CGRectMake(2*kScrollViewW, 0, kScrollViewW, kScrollViewH);
     
     _centerImageView.frame = CGRectMake(kScrollViewW, 0, kScrollViewW, kScrollViewH);
-
+    
     CGSize  size =[_pageControl sizeForNumberOfPages:imageCount];
     _pageControl.bounds =CGRectMake(0, 0, size.width, size.height);
     
@@ -86,7 +84,7 @@
         _pageControl.center =CGPointMake(kScrollViewW/2,kScrollViewH*_pageControllCenterYScale);
     }else
     {
-      _pageControl.center =CGPointMake(kScrollViewW/2,kScrollViewH*0.8);
+        _pageControl.center =CGPointMake(kScrollViewW/2,kScrollViewH*0.8);
     }
     
 }
@@ -97,7 +95,7 @@
     if (isAnimation) {
         return;
     }
-
+    
     if (ges.state == UIGestureRecognizerStateBegan) {
         if (_timer  && ![_timer isValid]) {
             NSLog(@"timer not valid");
@@ -114,7 +112,7 @@
             return;
         }
         CGPoint currentPoint = [ges translationInView:ges.view];
-         radio = currentPoint.x / self.bounds.size.width;
+        radio = currentPoint.x / self.bounds.size.width;
         _scrollView.contentOffset = CGPointMake(kScrollViewW-currentPoint.x, 0);
     }
     else if(ges.state == UIGestureRecognizerStateEnded)
@@ -127,11 +125,11 @@
             [_scrollView setContentOffset:CGPointMake(kScrollViewW, 0) animated:YES];
             
             if (_timer) {
-             [_timer setFireDate:[NSDate dateWithTimeInterval:3 sinceDate:[NSDate date]]];
+                [_timer setFireDate:[NSDate dateWithTimeInterval:3 sinceDate:[NSDate date]]];
             }
-             return;
+            return;
         }
-    
+        
         [self reloadImage:fabs(radio) endProgress:1.0];
         if (_timer) {
             [_timer setFireDate:[NSDate dateWithTimeInterval:3 sinceDate:[NSDate date]]];
@@ -155,7 +153,7 @@
 #pragma mark set left\center\right defaultImage
 - (void)addDefaultImage
 {
- 
+    
     _leftImageView.image   = _images[_images.count -1];
     currentIndex =0;
     _centerImageView.image = _images[currentIndex];
@@ -164,20 +162,10 @@
 
 - (void)addDefaultImageURL
 {
-     currentIndex =0;
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-       
-       UIImage * leftImage =  [UIImage setImageWithURL:_imagesURL[_imagesURL.count -1]];
-       UIImage * centerImage  =  [UIImage setImageWithURL:_imagesURL[currentIndex]];
-       UIImage * rightImage  =  [UIImage setImageWithURL:_imagesURL[currentIndex+1]];
-        dispatch_async(dispatch_get_main_queue(), ^{
-             _leftImageView.image  = leftImage;
-            _centerImageView.image = centerImage;
-            _rightImageView.image  = rightImage;
-        });
-    });
-
-    
+    currentIndex =0;
+    [_leftImageView  setImageWithURL:_imagesURL[_imagesURL.count -1]];
+    [_centerImageView  setImageWithURL:_imagesURL[currentIndex]];
+    [_rightImageView  setImageWithURL:_imagesURL[currentIndex+1]];
 }
 #pragma mark    start timer
 - (void)startTimer
@@ -230,9 +218,9 @@
         _centerImageView.image = _images[currentIndex];
     }else if (_imagesURL.count && _imagesURL)
     {
-        _centerImageView.image =  [UIImage setImageWithURL:_imagesURL[currentIndex]];
+        [_centerImageView  setImageWithURL:_imagesURL[currentIndex]];
     }
-   
+    
     [_centerImageView.layer addAnimation:transition forKey:@"centerAnimation"];
     
     //每次滑动过后都将偏移量置为中间的图
@@ -246,30 +234,19 @@
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
     isAnimation = NO;
+    NSUInteger leftImageIndex,rightImageIndex;
+    leftImageIndex =(currentIndex-1+imageCount )%imageCount;
+    rightImageIndex =(currentIndex +1)%imageCount;
     if (_images.count) {
-        NSUInteger leftImageIndex,rightImageIndex;
-        leftImageIndex =(currentIndex-1+imageCount )%imageCount;
         _leftImageView.image =_images[leftImageIndex];
-        
-        rightImageIndex =(currentIndex +1)%imageCount;
         _rightImageView.image =_images[rightImageIndex];
         
     }else if (_imagesURL.count)
     {
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            NSUInteger leftImageIndex,rightImageIndex;
-            leftImageIndex =(currentIndex-1+imageCount )%imageCount;
-             rightImageIndex =(currentIndex +1)%imageCount;
-            UIImage * leftImage =  [UIImage setImageWithURL:_imagesURL[leftImageIndex]];
-            UIImage * rightImage  =  [UIImage setImageWithURL:_imagesURL[rightImageIndex]];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                _leftImageView.image  = leftImage;
-                _rightImageView.image  = rightImage;
-            });
-        });
-
+        [_leftImageView setImageWithURL:_imagesURL[leftImageIndex]];
+        [_rightImageView setImageWithURL:_imagesURL[rightImageIndex]];
     }
-  
+    
 }
 
 #pragma mark - setter & getter
@@ -291,7 +268,7 @@
             [self startTimer];
         }
     });
-  
+    
 }
 
 - (void)setImagesURL:(NSArray *)imagesURL
@@ -299,16 +276,16 @@
     _imagesURL = imagesURL;
     _images = nil;
     imageCount = imagesURL.count;
-
-        if (imagesURL.count >= 2) {
-            // 添加默认的图片
-            [self addDefaultImageURL];
-            _pageControl.numberOfPages =imageCount;
-        }
-        if (imageCount) {
-            [self startTimer];
-        }
-   
+    
+    if (imagesURL.count >= 2) {
+        // 添加默认的图片
+        [self addDefaultImageURL];
+        _pageControl.numberOfPages =imageCount;
+    }
+    if (imageCount) {
+        [self startTimer];
+    }
+    
 }
 - (void)setPageIndicatorTintColor:(UIColor *)pageIndicatorTintColor
 {
@@ -333,7 +310,7 @@
         imageView.contentMode =UIViewContentModeScaleAspectFit;
         _leftImageView = imageView;
     }
-   
+    
     return _leftImageView;
 }
 
@@ -341,11 +318,11 @@
 {
     
     if (!_rightImageView) {
-       UIImageView * rightImageView =[[UIImageView alloc]init];
+        UIImageView * rightImageView =[[UIImageView alloc]init];
         rightImageView.contentMode =UIViewContentModeScaleAspectFit;
         _rightImageView = rightImageView;
     }
-   
+    
     return _rightImageView;
 }
 
@@ -364,7 +341,7 @@
         _centerImageView = centerImageView;
     }
     return _centerImageView;
-
+    
 }
 
 - (UIScrollView *)scrollView

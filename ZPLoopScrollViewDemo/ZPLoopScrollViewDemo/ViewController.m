@@ -32,7 +32,7 @@
 //                                  @"http://img.ycwb.com/news/attachement/jpg/site2/20110226/90fba60155890ed3082500.jpg",
 //                                  @"http://imgsrc.baidu.com/forum/pic/item/b03533fa828ba61e78ab1c894134970a314e59cb.jpg",
 //                                  @"http://pic27.nipic.com/20130227/7224820_020411089000_2.jpg"];
-//    
+//
     self.scrollView.pageControllCenterYScale = 0.5;
 }
 #pragma mark - delegate

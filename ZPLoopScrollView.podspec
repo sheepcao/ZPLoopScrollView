@@ -16,6 +16,6 @@ Pod::Spec.new do |s|
   s.source_files  = 'ZPLoopScrollView/*.{h,m}'
   s.framework     = 'UIKit'
   s.requires_arc = true
-  s.dependency 'AFNetworking'
+  s.dependency   'AFNetworking', '~> 3.1.0'
   
 end

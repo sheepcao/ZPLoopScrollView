@@ -15,7 +15,6 @@
 		F48684B01CFD7E49008C9AA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F48684AF1CFD7E49008C9AA5 /* Assets.xcassets */; };
 		F48684B31CFD7E49008C9AA5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F48684B11CFD7E49008C9AA5 /* LaunchScreen.storyboard */; };
 		F48684BF1CFD8020008C9AA5 /* ImageInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = F48684BE1CFD8020008C9AA5 /* ImageInfo.plist */; };
-		F4C0FBF81CFE7C21008DF40B /* ZPLoopScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0FBF61CFE7C21008DF40B /* ZPLoopScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,8 +32,6 @@
 		F48684B21CFD7E49008C9AA5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F48684B41CFD7E49008C9AA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F48684BE1CFD8020008C9AA5 /* ImageInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ImageInfo.plist; sourceTree = "<group>"; };
-		F4C0FBF51CFE7C21008DF40B /* ZPLoopScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZPLoopScrollView.h; sourceTree = "<group>"; };
-		F4C0FBF61CFE7C21008DF40B /* ZPLoopScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZPLoopScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,7 +84,6 @@
 		F48684A21CFD7E48008C9AA5 /* ZPLoopScrollViewDemo */ = {
 			isa = PBXGroup;
 			children = (
-				F4C0FBF41CFE7C21008DF40B /* ZPLoopScrollView */,
 				F48684A61CFD7E48008C9AA5 /* AppDelegate.h */,
 				F48684A71CFD7E48008C9AA5 /* AppDelegate.m */,
 				F48684A91CFD7E48008C9AA5 /* ViewController.h */,
@@ -108,15 +104,6 @@
 				F48684A41CFD7E48008C9AA5 /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		F4C0FBF41CFE7C21008DF40B /* ZPLoopScrollView */ = {
-			isa = PBXGroup;
-			children = (
-				F4C0FBF51CFE7C21008DF40B /* ZPLoopScrollView.h */,
-				F4C0FBF61CFE7C21008DF40B /* ZPLoopScrollView.m */,
-			);
-			path = ZPLoopScrollView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,7 +231,6 @@
 				F48684AB1CFD7E48008C9AA5 /* ViewController.m in Sources */,
 				F48684A81CFD7E48008C9AA5 /* AppDelegate.m in Sources */,
 				F48684A51CFD7E48008C9AA5 /* main.m in Sources */,
-				F4C0FBF81CFE7C21008DF40B /* ZPLoopScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

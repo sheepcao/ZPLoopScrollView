@@ -14,10 +14,7 @@
  *  show image arrays
  */
 @property (nonatomic,strong)NSArray * images;
-/**
- *  image's URL
- */
-@property (nonatomic,strong)NSArray *imagesURL;
+
 @property (nonatomic,assign)id<ZPLoopScrollViewDelegate> delegate;
 /**
  *   The tint color to be used for the page indicator.

@@ -12,7 +12,7 @@
 
 
 #import "ZPLoopScrollView.h"
-#import "UIKit+AFNetworking.h"
+
 @interface ZPLoopScrollView ()<UIScrollViewDelegate>
 {
     NSUInteger imageCount;
@@ -41,9 +41,6 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self == [super initWithFrame:frame]) {
-        
-        NSCache * cache = [[NSCache alloc]init];
-        cache.name = @"com.zp.download.image";
         [self setup];
     }
     return self;
@@ -97,7 +94,6 @@
     if (isAnimation) {
         return;
     }
-
     if (ges.state == UIGestureRecognizerStateBegan) {
         if (_timer  && ![_timer isValid]) {
             NSLog(@"timer not valid");
@@ -106,7 +102,6 @@
         if (_timer) {
             [_timer setFireDate:[NSDate distantFuture]];
         }
-        
     }else if (ges.state == UIGestureRecognizerStateChanged)
     {
         if (_timer  && ![_timer isValid]) {
@@ -123,7 +118,7 @@
             NSLog(@"timer not valid");
             return;
         }
-        if (fabs(radio) < 0.4) {
+        if (fabs(radio) < 0.3) {
             [_scrollView setContentOffset:CGPointMake(kScrollViewW, 0) animated:YES];
             
             if (_timer) {
@@ -131,7 +126,6 @@
             }
              return;
         }
-    
         [self reloadImage:fabs(radio) endProgress:1.0];
         if (_timer) {
             [_timer setFireDate:[NSDate dateWithTimeInterval:3 sinceDate:[NSDate date]]];
@@ -155,29 +149,10 @@
 #pragma mark set left\center\right defaultImage
 - (void)addDefaultImage
 {
- 
     _leftImageView.image   = _images[_images.count -1];
     currentIndex =0;
     _centerImageView.image = _images[currentIndex];
     _rightImageView.image  = _images[currentIndex+1];
-}
-
-- (void)addDefaultImageURL
-{
-     currentIndex =0;
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-       
-       UIImage * leftImage =  [UIImage setImageWithURL:_imagesURL[_imagesURL.count -1]];
-       UIImage * centerImage  =  [UIImage setImageWithURL:_imagesURL[currentIndex]];
-       UIImage * rightImage  =  [UIImage setImageWithURL:_imagesURL[currentIndex+1]];
-        dispatch_async(dispatch_get_main_queue(), ^{
-             _leftImageView.image  = leftImage;
-            _centerImageView.image = centerImage;
-            _rightImageView.image  = rightImage;
-        });
-    });
-
-    
 }
 #pragma mark    start timer
 - (void)startTimer
@@ -213,6 +188,7 @@
     transition.endProgress =endProgress;
     transition.timingFunction =[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     transition.type =@"push";
+    
     transition.delegate = self;
     transition.duration =0.5f;
     //如果向右滑动
@@ -226,13 +202,7 @@
         transition.subtype =kCATransitionFromLeft;
     }
     
-    if (_images.count && _images) {
-        _centerImageView.image = _images[currentIndex];
-    }else if (_imagesURL.count && _imagesURL)
-    {
-        _centerImageView.image =  [UIImage setImageWithURL:_imagesURL[currentIndex]];
-    }
-   
+    _centerImageView.image = _images[currentIndex];
     [_centerImageView.layer addAnimation:transition forKey:@"centerAnimation"];
     
     //每次滑动过后都将偏移量置为中间的图
@@ -246,70 +216,36 @@
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
     isAnimation = NO;
-    if (_images.count) {
-        NSUInteger leftImageIndex,rightImageIndex;
-        leftImageIndex =(currentIndex-1+imageCount )%imageCount;
-        _leftImageView.image =_images[leftImageIndex];
-        
-        rightImageIndex =(currentIndex +1)%imageCount;
-        _rightImageView.image =_images[rightImageIndex];
-        
-    }else if (_imagesURL.count)
-    {
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            NSUInteger leftImageIndex,rightImageIndex;
-            leftImageIndex =(currentIndex-1+imageCount )%imageCount;
-             rightImageIndex =(currentIndex +1)%imageCount;
-            UIImage * leftImage =  [UIImage setImageWithURL:_imagesURL[leftImageIndex]];
-            UIImage * rightImage  =  [UIImage setImageWithURL:_imagesURL[rightImageIndex]];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                _leftImageView.image  = leftImage;
-                _rightImageView.image  = rightImage;
-            });
-        });
-
-    }
-  
+    NSUInteger leftImageIndex,rightImageIndex;
+    
+    leftImageIndex =(currentIndex-1+imageCount )%imageCount;
+    _leftImageView.image =_images[leftImageIndex];
+    
+    rightImageIndex =(currentIndex +1)%imageCount;
+    _rightImageView.image =_images[rightImageIndex];
+    
 }
+
 
 #pragma mark - setter & getter
 
 - (void)setImages:(NSArray *)images
 {
     _images = images;
-    _imagesURL  = nil ;
     //加载数据，获取图片
     imageCount = images.count;
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (images.count >= 2) {
-            // 添加默认的图片
-            [self addDefaultImage];
-            _pageControl.numberOfPages =imageCount;
-        }
-        if (imageCount) {
-            [self startTimer];
-        }
-    });
+    if (images.count >= 2) {
+        // 添加默认的图片
+        [self addDefaultImage];
+        _pageControl.numberOfPages =imageCount;
+    }
+    if (imageCount) {
+          [self startTimer];
+    }
   
 }
 
-- (void)setImagesURL:(NSArray *)imagesURL
-{
-    _imagesURL = imagesURL;
-    _images = nil;
-    imageCount = imagesURL.count;
-
-        if (imagesURL.count >= 2) {
-            // 添加默认的图片
-            [self addDefaultImageURL];
-            _pageControl.numberOfPages =imageCount;
-        }
-        if (imageCount) {
-            [self startTimer];
-        }
-   
-}
 - (void)setPageIndicatorTintColor:(UIColor *)pageIndicatorTintColor
 {
     if (_pageControl) {

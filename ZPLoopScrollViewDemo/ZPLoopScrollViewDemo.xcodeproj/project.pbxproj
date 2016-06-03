@@ -16,7 +16,6 @@
 		F48684B31CFD7E49008C9AA5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F48684B11CFD7E49008C9AA5 /* LaunchScreen.storyboard */; };
 		F48684BF1CFD8020008C9AA5 /* ImageInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = F48684BE1CFD8020008C9AA5 /* ImageInfo.plist */; };
 		F4C0FBF81CFE7C21008DF40B /* ZPLoopScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0FBF61CFE7C21008DF40B /* ZPLoopScrollView.m */; };
-		F4C0FBF91CFE7C21008DF40B /* ZPLoopScrollView.podspec in Resources */ = {isa = PBXBuildFile; fileRef = F4C0FBF71CFE7C21008DF40B /* ZPLoopScrollView.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,7 +35,6 @@
 		F48684BE1CFD8020008C9AA5 /* ImageInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ImageInfo.plist; sourceTree = "<group>"; };
 		F4C0FBF51CFE7C21008DF40B /* ZPLoopScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZPLoopScrollView.h; sourceTree = "<group>"; };
 		F4C0FBF61CFE7C21008DF40B /* ZPLoopScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZPLoopScrollView.m; sourceTree = "<group>"; };
-		F4C0FBF71CFE7C21008DF40B /* ZPLoopScrollView.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ZPLoopScrollView.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,7 +115,6 @@
 			children = (
 				F4C0FBF51CFE7C21008DF40B /* ZPLoopScrollView.h */,
 				F4C0FBF61CFE7C21008DF40B /* ZPLoopScrollView.m */,
-				F4C0FBF71CFE7C21008DF40B /* ZPLoopScrollView.podspec */,
 			);
 			path = ZPLoopScrollView;
 			sourceTree = "<group>";
@@ -185,7 +182,6 @@
 				F48684BF1CFD8020008C9AA5 /* ImageInfo.plist in Resources */,
 				F48684B31CFD7E49008C9AA5 /* LaunchScreen.storyboard in Resources */,
 				F48684B01CFD7E49008C9AA5 /* Assets.xcassets in Resources */,
-				F4C0FBF91CFE7C21008DF40B /* ZPLoopScrollView.podspec in Resources */,
 				F48684AE1CFD7E48008C9AA5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "ZPLoopScrollView"
-  s.version      = "1.0.0"
+  s.version      = "1.1.0"
   s.summary      = "Using three UIImageView pictures in an infinite loop, you can manually drag and drop and click on interactive"
 
   s.description  = <<-DESC
@@ -16,5 +16,6 @@ Pod::Spec.new do |s|
   s.source_files  = 'ZPLoopScrollView/*.{h,m}'
   s.framework     = 'UIKit'
   s.requires_arc = true
-
+  s.dependency 'AFNetworking'
+  
 end

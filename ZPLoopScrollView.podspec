@@ -10,12 +10,11 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/twenty-zp/ZPLoopScrollView"
   s.author       =  {'twenty-zp' => 'twenty-zp'}
   s.license      =  { :type => 'MIT', :file => 'ZPLoopScrollView/LICENSE.txt'}
-  s.platform     =  :ios
+  s.platform     =  :ios, '7.0'
   s.source       = { :git => "https://github.com/twenty-zp/ZPLoopScrollView.git", :tag => s.version}
-  s.dependency   'AFNetworking', '~> 3.1.0'
+  s.dependency   'AFNetworking', '>= 3.0.0'
   s.source_files  = 'ZPLoopScrollView/*.{h,m}'
   s.framework     = 'UIKit'
   s.requires_arc = true
  
-  
 end

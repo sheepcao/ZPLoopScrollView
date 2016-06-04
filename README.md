@@ -27,7 +27,7 @@ ZPLoopScrollView 需要ARC.
     
     		[self.view addSubview:self.scrollView];
 	    	//设置展示图片
-		 	self.scrollView.images = array;
+		 	//self.scrollView.images = array;
 			//设置网络图片
 			self.scrollView.imagesURL = @[@"http://img4.duitang.com/uploads/item/201204/11/20120411162656_eJJiZ.jpeg",
 		                                  @"http://img.ycwb.com/news/attachement/jpg/site2/20110226/90fba60155890ed3082500.jpg",

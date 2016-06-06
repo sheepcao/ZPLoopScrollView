@@ -31,6 +31,8 @@
 //Default 0.8
 @property (nonatomic,assign)CGFloat pageControllCenterYScale;
 
+//startTimer set images or imagesURL later ,setter 开启定时器
+- (void)startTimer;
 @end
 
 

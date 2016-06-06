@@ -12,7 +12,8 @@
 
 
 #import "ZPLoopScrollView.h"
-#import "UIKit+AFNetworking.h"
+#import "UIImageView+WebCache.h"
+//#import "UIImageView+AFNetworking.h"
 @interface ZPLoopScrollView ()<UIScrollViewDelegate>
 {
     NSUInteger imageCount;
@@ -57,9 +58,9 @@
      */
     [self addSubview:self.scrollView];
     
-    [self.scrollView addSubview:self.leftImageView];
-    [self.scrollView addSubview:self.centerImageView];
-    [self.scrollView addSubview:self.rightImageView];
+    [_scrollView addSubview:self.leftImageView];
+    [_scrollView addSubview:self.centerImageView];
+    [_scrollView addSubview:self.rightImageView];
     
     [self addSubview:self.pageControl];
 }
@@ -266,9 +267,7 @@
             [self addDefaultImage];
             _pageControl.numberOfPages =imageCount;
         }
-        if (imageCount) {
-            [self startTimer];
-        }
+        
     });
     
 }
@@ -284,9 +283,7 @@
         [self addDefaultImageURL];
         _pageControl.numberOfPages =imageCount;
     }
-    if (imageCount) {
-        [self startTimer];
-    }
+    
     
 }
 - (void)setPageIndicatorTintColor:(UIColor *)pageIndicatorTintColor
@@ -309,7 +306,7 @@
     
     if (!_leftImageView) {
         UIImageView * imageView = [[UIImageView alloc]init];
-        imageView.contentMode =UIViewContentModeScaleAspectFit;
+        imageView.contentMode =UIViewContentModeScaleToFill;
         _leftImageView = imageView;
     }
     
@@ -321,7 +318,7 @@
     
     if (!_rightImageView) {
         UIImageView * rightImageView =[[UIImageView alloc]init];
-        rightImageView.contentMode =UIViewContentModeScaleAspectFit;
+        rightImageView.contentMode =UIViewContentModeScaleToFill;
         _rightImageView = rightImageView;
     }
     
@@ -334,7 +331,7 @@
     if (!_centerImageView) {
         UIImageView *  centerImageView =[[UIImageView alloc]init];
         centerImageView.userInteractionEnabled = YES;
-        centerImageView.contentMode =UIViewContentModeScaleAspectFit;
+        centerImageView.contentMode =UIViewContentModeScaleToFill;
         UIPanGestureRecognizer * pan  = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePan:)];
         UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTapImageIndex:)];
         [centerImageView addGestureRecognizer:pan];

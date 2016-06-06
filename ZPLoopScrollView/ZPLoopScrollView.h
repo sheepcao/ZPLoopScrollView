@@ -7,6 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+
+typedef NS_ENUM(NSUInteger,ZPLoopScrollViewType)
+{
+    ZPLoopScrollViewPageControlType = 0,
+    ZPLoopScrollViewShowIndexType,
+};
+
 @protocol ZPLoopScrollViewDelegate;
 @interface ZPLoopScrollView : UIView
 
@@ -30,6 +37,21 @@
 
 //Default 0.8
 @property (nonatomic,assign)CGFloat pageControllCenterYScale;
+
+//showIndexLabel text Color
+@property (nonatomic,strong)UIColor * showIndexTextColor;
+
+//showIndexLabel text Font
+@property (nonatomic,strong)UIFont  * showIndexTextFont;
+
+//showIndexLabel backgroundColor
+@property (nonatomic,strong)UIColor * showIndexTextBackgroundColor;
+
+//展示scrollView中的pageControl 各个类型
+@property (nonatomic,assign)ZPLoopScrollViewType scrollViewType;
+
+
+- (instancetype)initWithLoopScrollViewType:(ZPLoopScrollViewType)type;
 
 //startTimer set images or imagesURL later ,setter 开启定时器
 - (void)startTimer;

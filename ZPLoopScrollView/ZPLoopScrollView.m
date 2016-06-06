@@ -11,9 +11,15 @@
 #define kCount 3
 
 
+
+
+
 #import "ZPLoopScrollView.h"
-#import "UIImageView+WebCache.h"
-//#import "UIImageView+AFNetworking.h"
+//#import "UIImageView+WebCache.h"
+#import "UIImageView+AFNetworking.h"
+
+static const  NSUInteger kShowIndexW = 60;
+
 @interface ZPLoopScrollView ()<UIScrollViewDelegate>
 {
     NSUInteger imageCount;
@@ -27,7 +33,7 @@
 @property (nonatomic,strong)UIImageView  *leftImageView ;
 @property (nonatomic,strong)UIImageView  *centerImageView ;
 @property (nonatomic,strong)UIImageView  *rightImageView ;
-
+@property (nonatomic,strong)UILabel      *showIndexControl;
 
 
 @end
@@ -41,13 +47,23 @@
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
+    
     if (self == [super initWithFrame:frame]) {
-        
+         NSLog(@"%s",__func__);
         [self setup];
+        self.scrollViewType = ZPLoopScrollViewPageControlType;
     }
     return self;
 }
-
+- (instancetype)initWithLoopScrollViewType:(ZPLoopScrollViewType)type
+{
+    
+    if (self == [super init]) {
+         NSLog(@"%s",__func__);
+        self.scrollViewType = type;
+    }
+    return self;
+}
 - (void)setup
 {
     /**
@@ -62,13 +78,13 @@
     [_scrollView addSubview:self.centerImageView];
     [_scrollView addSubview:self.rightImageView];
     
-    [self addSubview:self.pageControl];
+   
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
+    NSLog(@"%s",__func__);
     _scrollView.frame = self.bounds;
     _scrollView.contentOffset = CGPointMake(kScrollViewW, 0);
     
@@ -78,14 +94,23 @@
     
     _centerImageView.frame = CGRectMake(kScrollViewW, 0, kScrollViewW, kScrollViewH);
     
-    CGSize  size =[_pageControl sizeForNumberOfPages:imageCount];
-    _pageControl.bounds =CGRectMake(0, 0, size.width, size.height);
-    
-    if (_pageControllCenterYScale) {
-        _pageControl.center =CGPointMake(kScrollViewW/2,kScrollViewH*_pageControllCenterYScale);
-    }else
+    if (_pageControl && _scrollViewType == ZPLoopScrollViewPageControlType)
     {
-        _pageControl.center =CGPointMake(kScrollViewW/2,kScrollViewH*0.8);
+        CGSize  size =[_pageControl sizeForNumberOfPages:imageCount];
+        _pageControl.bounds =CGRectMake(0, 0, size.width, size.height);
+        
+        if (_pageControllCenterYScale) {
+            _pageControl.center =CGPointMake(kScrollViewW/2,kScrollViewH*_pageControllCenterYScale);
+        }else
+        {
+            _pageControl.center =CGPointMake(kScrollViewW/2,kScrollViewH*0.8);
+        }
+
+    }else if (_showIndexControl && _scrollViewType == ZPLoopScrollViewShowIndexType)
+    {
+        _showIndexControl.frame = CGRectMake(self.bounds.size.width-10-kShowIndexW,self.bounds.size.height-kShowIndexW-10, kShowIndexW, kShowIndexW);
+        _showIndexControl.layer.cornerRadius = kShowIndexW*0.5;
+        _showIndexControl.layer.masksToBounds = YES;
     }
     
 }
@@ -96,7 +121,7 @@
     if (isAnimation) {
         return;
     }
-    
+    CGPoint currentPoint = [ges translationInView:ges.view];
     if (ges.state == UIGestureRecognizerStateBegan) {
         if (_timer  && ![_timer isValid]) {
             NSLog(@"timer not valid");
@@ -112,7 +137,6 @@
             NSLog(@"timer not valid");
             return;
         }
-        CGPoint currentPoint = [ges translationInView:ges.view];
         radio = currentPoint.x / self.bounds.size.width;
         _scrollView.contentOffset = CGPointMake(kScrollViewW-currentPoint.x, 0);
     }
@@ -171,6 +195,9 @@
 #pragma mark    start timer
 - (void)startTimer
 {
+    if (imageCount <2) {
+        return;
+    }
     if (_timer) {
         [_timer invalidate];
         _timer = nil;
@@ -226,7 +253,14 @@
     
     //每次滑动过后都将偏移量置为中间的图
     _scrollView.contentOffset =CGPointMake(kScrollViewW, 0);
-    _pageControl.currentPage =currentIndex;
+    if (_pageControl) {
+             _pageControl.currentPage =currentIndex;
+    }
+    if (_showIndexControl) {
+        _showIndexControl.text = [NSString stringWithFormat:@"%lu/%lu",(unsigned long)currentIndex+1,(unsigned long)imageCount];
+        [_showIndexControl sizeToFit];
+    }
+
 }
 
 #pragma  mark - delegate
@@ -265,7 +299,14 @@
         if (images.count >= 2) {
             // 添加默认的图片
             [self addDefaultImage];
-            _pageControl.numberOfPages =imageCount;
+            
+            if (_pageControl) {
+                _pageControl.numberOfPages =imageCount;
+            }
+            if (_showIndexControl) {
+                _showIndexControl.text = [NSString stringWithFormat:@"%lu/%lu",(unsigned long)currentIndex+1,(unsigned long)imageCount];
+                [_showIndexControl sizeToFit];
+            }
         }
         
     });
@@ -281,7 +322,13 @@
     if (imagesURL.count >= 2) {
         // 添加默认的图片
         [self addDefaultImageURL];
-        _pageControl.numberOfPages =imageCount;
+        if (_pageControl) {
+            _pageControl.numberOfPages =imageCount;
+        }
+        if (_showIndexControl) {
+            _showIndexControl.text = [NSString stringWithFormat:@"%lu/%lu",(unsigned long)currentIndex+1,(unsigned long)imageCount];
+            [_showIndexControl sizeToFit];
+        }
     }
     
     
@@ -301,6 +348,56 @@
     }
     _currentPageIndicatorTintColor = currentPageIndicatorTintColor;
 }
+
+- (void)setScrollViewType:(ZPLoopScrollViewType)scrollViewType
+{
+    switch (scrollViewType) {
+        case ZPLoopScrollViewPageControlType:
+        {
+            if (_showIndexControl) {
+                [_showIndexControl removeFromSuperview];
+                _showIndexControl = nil;
+            }
+             [self addSubview:self.pageControl];
+        }
+            break;
+        case ZPLoopScrollViewShowIndexType:
+        {
+            if (_pageControl) {
+                [_pageControl removeFromSuperview];
+                _pageControl = nil;
+            }
+            [self addSubview:self.showIndexControl];
+        }
+            break;
+        default:
+            break;
+    }
+    _scrollViewType = scrollViewType;
+//    [self setNeedsLayout];
+}
+- (void)setShowIndexTextBackgroundColor:(UIColor *)showIndexTextBackgroundColor
+{
+    if (_showIndexControl) {
+        _showIndexControl.backgroundColor = showIndexTextBackgroundColor;
+    }
+    _showIndexTextBackgroundColor = showIndexTextBackgroundColor;
+}
+- (void)setShowIndexTextColor:(UIColor *)showIndexTextColor
+{
+    if (_showIndexControl) {
+        _showIndexControl.textColor = showIndexTextColor;
+    }
+    _showIndexTextColor = showIndexTextColor;
+}
+- (void)setShowIndexTextFont:(UIFont *)showIndexTextFont
+{
+    if (_showIndexTextFont) {
+        _showIndexControl.font = showIndexTextFont;
+    }
+    _showIndexTextFont = showIndexTextFont;
+}
+
 - (UIImageView *)leftImageView
 {
     
@@ -366,5 +463,17 @@
         _pageControl = pageControl;
     }
     return _pageControl;
+}
+
+- (UILabel *)showIndexControl
+{
+    if (!_showIndexControl) {
+        _showIndexControl = [[UILabel alloc]init];
+        _showIndexControl.textColor = [UIColor blackColor];
+        _showIndexControl.textAlignment = NSTextAlignmentCenter;
+        _showIndexControl.backgroundColor = [UIColor whiteColor];
+        _showIndexControl.font = [UIFont boldSystemFontOfSize:17.0];
+    }
+    return _showIndexControl;
 }
 @end

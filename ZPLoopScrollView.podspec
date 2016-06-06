@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "ZPLoopScrollView"
-  s.version      = "1.0.1"
+  s.version      = "1.0.2"
   s.summary      = "Using three UIImageView pictures in an infinite loop, you can manually drag and drop and click on interactive"
 
   s.description  = <<-DESC

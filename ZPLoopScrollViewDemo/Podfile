@@ -1,4 +1,4 @@
 platform :ios,'7.0'
 target :ZPLoopScrollViewDemo  do 
-pod 'ZPLoopScrollView', '~> 1.0.1’
+pod 'ZPLoopScrollView', '~> 1.0.2’
 end

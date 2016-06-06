@@ -34,6 +34,7 @@
                                   @"http://pic27.nipic.com/20130227/7224820_020411089000_2.jpg"];
 
     self.scrollView.pageControllCenterYScale = 0.5;
+//    [self.scrollView startTimer];
 }
 #pragma mark - delegate
 - (void)scrollViewLoopDidEndClicked:(ZPLoopScrollView *)scrollViewLoop index:(NSUInteger)index
@@ -45,6 +46,7 @@
 {
     if (!_scrollView) {
         _scrollView = [[ZPLoopScrollView alloc]initWithFrame:self.view.bounds];
+//        _scrollView.frame = self.view.bounds;
         _scrollView.delegate = self;
     }
     return _scrollView;

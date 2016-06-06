@@ -42,8 +42,6 @@
 {
     if (self == [super initWithFrame:frame]) {
         
-        NSCache * cache = [[NSCache alloc]init];
-        cache.name = @"com.zp.download.image";
         [self setup];
     }
     return self;

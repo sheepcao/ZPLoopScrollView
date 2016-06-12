@@ -5,7 +5,7 @@
 ####Cocoapods添加:
 直接在Podfile中使用即可
 
-	pod 'ZPLoopScrollView', '~> 1.0.1'
+	pod 'ZPLoopScrollView', '~> 1.0.2'
 ####手动添加:
 
 1. 添加**ZPLoopScrollView.h** 和 **ZPLoopScrollView.m**到你的项目.

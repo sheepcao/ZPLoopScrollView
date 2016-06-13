@@ -50,11 +50,17 @@ typedef NS_ENUM(NSUInteger,ZPLoopScrollViewType)
 //展示scrollView中的pageControl 各个类型
 @property (nonatomic,assign)ZPLoopScrollViewType scrollViewType;
 
+//获取定时器
+@property (nonatomic,strong,readonly)NSTimer *timer;
+
 
 - (instancetype)initWithLoopScrollViewType:(ZPLoopScrollViewType)type;
 
 //startTimer set images or imagesURL later ,setter 开启定时器
 - (void)startTimer;
+//stopTimer 停止定时器
+- (void)stopTimer;
+
 @end
 
 

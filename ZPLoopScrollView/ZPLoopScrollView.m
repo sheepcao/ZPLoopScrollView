@@ -15,16 +15,14 @@
 
 
 #import "ZPLoopScrollView.h"
-//#import "UIImageView+WebCache.h"
 #import "UIImageView+AFNetworking.h"
 
-static const  NSUInteger kShowIndexW = 60;
+static  NSUInteger kShowIndexW = 40;
 
 @interface ZPLoopScrollView ()<UIScrollViewDelegate>
 {
     NSUInteger imageCount;
     NSUInteger currentIndex;
-    NSTimer     *_timer;
     BOOL        isAnimation ;
     CGFloat     radio;
 }
@@ -34,7 +32,7 @@ static const  NSUInteger kShowIndexW = 60;
 @property (nonatomic,strong)UIImageView  *centerImageView ;
 @property (nonatomic,strong)UIImageView  *rightImageView ;
 @property (nonatomic,strong)UILabel      *showIndexControl;
-
+@property (nonatomic,strong)NSTimer *timer;
 
 @end
 @implementation ZPLoopScrollView
@@ -49,7 +47,7 @@ static const  NSUInteger kShowIndexW = 60;
 {
     
     if (self == [super initWithFrame:frame]) {
-         NSLog(@"%s",__func__);
+        
         [self setup];
         self.scrollViewType = ZPLoopScrollViewPageControlType;
     }
@@ -59,7 +57,7 @@ static const  NSUInteger kShowIndexW = 60;
 {
     
     if (self == [super init]) {
-         NSLog(@"%s",__func__);
+        
         self.scrollViewType = type;
     }
     return self;
@@ -73,18 +71,17 @@ static const  NSUInteger kShowIndexW = 60;
      *  @return
      */
     [self addSubview:self.scrollView];
-    
     [_scrollView addSubview:self.leftImageView];
     [_scrollView addSubview:self.centerImageView];
     [_scrollView addSubview:self.rightImageView];
     
-   
+    
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    NSLog(@"%s",__func__);
+    
     _scrollView.frame = self.bounds;
     _scrollView.contentOffset = CGPointMake(kScrollViewW, 0);
     
@@ -105,9 +102,10 @@ static const  NSUInteger kShowIndexW = 60;
         {
             _pageControl.center =CGPointMake(kScrollViewW/2,kScrollViewH*0.8);
         }
-
+        
     }else if (_showIndexControl && _scrollViewType == ZPLoopScrollViewShowIndexType)
     {
+        
         _showIndexControl.frame = CGRectMake(self.bounds.size.width-10-kShowIndexW,self.bounds.size.height-kShowIndexW-10, kShowIndexW, kShowIndexW);
         _showIndexControl.layer.cornerRadius = kShowIndexW*0.5;
         _showIndexControl.layer.masksToBounds = YES;
@@ -192,6 +190,15 @@ static const  NSUInteger kShowIndexW = 60;
     [_centerImageView  setImageWithURL:[NSURL URLWithString:_imagesURL[currentIndex]]];
     [_rightImageView  setImageWithURL:[NSURL URLWithString:_imagesURL[currentIndex+1]]];
 }
+
+#pragma mark    stop timer
+- (void)stopTimer
+{
+    if (_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
+}
 #pragma mark    start timer
 - (void)startTimer
 {
@@ -202,9 +209,9 @@ static const  NSUInteger kShowIndexW = 60;
         [_timer invalidate];
         _timer = nil;
     }
-    _timer =    [NSTimer timerWithTimeInterval:2 target:self selector:@selector(reloadImageView) userInfo:nil repeats:YES];
+    
     NSRunLoop *runLoop =    [NSRunLoop currentRunLoop];
-    [runLoop addTimer:_timer forMode:NSDefaultRunLoopMode];
+    [runLoop addTimer:self.timer forMode:UITrackingRunLoopMode];
 }
 - (void)reloadImageView
 {
@@ -254,13 +261,12 @@ static const  NSUInteger kShowIndexW = 60;
     //每次滑动过后都将偏移量置为中间的图
     _scrollView.contentOffset =CGPointMake(kScrollViewW, 0);
     if (_pageControl) {
-             _pageControl.currentPage =currentIndex;
+        _pageControl.currentPage =currentIndex;
     }
     if (_showIndexControl) {
         _showIndexControl.text = [NSString stringWithFormat:@"%lu/%lu",(unsigned long)currentIndex+1,(unsigned long)imageCount];
-        [_showIndexControl sizeToFit];
     }
-
+    
 }
 
 #pragma  mark - delegate
@@ -305,7 +311,7 @@ static const  NSUInteger kShowIndexW = 60;
             }
             if (_showIndexControl) {
                 _showIndexControl.text = [NSString stringWithFormat:@"%lu/%lu",(unsigned long)currentIndex+1,(unsigned long)imageCount];
-                [_showIndexControl sizeToFit];
+                
             }
         }
         
@@ -327,7 +333,7 @@ static const  NSUInteger kShowIndexW = 60;
         }
         if (_showIndexControl) {
             _showIndexControl.text = [NSString stringWithFormat:@"%lu/%lu",(unsigned long)currentIndex+1,(unsigned long)imageCount];
-            [_showIndexControl sizeToFit];
+            
         }
     }
     
@@ -358,7 +364,7 @@ static const  NSUInteger kShowIndexW = 60;
                 [_showIndexControl removeFromSuperview];
                 _showIndexControl = nil;
             }
-             [self addSubview:self.pageControl];
+            [self addSubview:self.pageControl];
         }
             break;
         case ZPLoopScrollViewShowIndexType:
@@ -374,7 +380,7 @@ static const  NSUInteger kShowIndexW = 60;
             break;
     }
     _scrollViewType = scrollViewType;
-//    [self setNeedsLayout];
+    
 }
 - (void)setShowIndexTextBackgroundColor:(UIColor *)showIndexTextBackgroundColor
 {
@@ -475,5 +481,13 @@ static const  NSUInteger kShowIndexW = 60;
         _showIndexControl.font = [UIFont boldSystemFontOfSize:17.0];
     }
     return _showIndexControl;
+}
+
+- (NSTimer *)timer
+{
+    if (!_timer) {
+        _timer =    [NSTimer timerWithTimeInterval:2 target:self selector:@selector(reloadImageView) userInfo:nil repeats:YES];
+    }
+    return _timer;
 }
 @end

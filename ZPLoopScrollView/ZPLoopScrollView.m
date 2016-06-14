@@ -211,7 +211,7 @@ static  NSUInteger kShowIndexW = 40;
     }
     
     NSRunLoop *runLoop =    [NSRunLoop currentRunLoop];
-    [runLoop addTimer:self.timer forMode:UITrackingRunLoopMode];
+    [runLoop addTimer:self.timer forMode:NSDefaultRunLoopMode];
 }
 - (void)reloadImageView
 {

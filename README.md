@@ -35,6 +35,8 @@ ZPLoopScrollView 需要ARC.
 		                                  @"http://pic27.nipic.com/20130227/7224820_020411089000_2.jpg"];
 			 //设置pageControl在self.scrollView高度的比例,默认为0.8
 			 self.scrollView.pageControllCenterYScale = 0.5;
+			 //启动定时器,轮询开始
+			 [self.scrollView startTimer];
     }
 	#pragma mark - delegate
     - (void)scrollViewLoopDidEndClicked:(ZPLoopScrollView *)scrollViewLoop index:(NSUInteger)index

@@ -10,6 +10,7 @@
 
 1. 添加**ZPLoopScrollView.h** 和 **ZPLoopScrollView.m**到你的项目.
 ZPLoopScrollView 需要ARC.
+2. 通过使用**ZPLoopScrollView**对象方法**startTimer和****stopTimer**来启动轮询
 
 #使用
 
